@@ -5,11 +5,12 @@ const API_GRAPHQL = "http://localhost:3000/graphql";
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    
+    super(props);
+
     this.state = {
-      articles: []
-    }
+      articles: [],
+      contentEditableId: null
+    };
   }
 
   componentDidMount() {
@@ -22,7 +23,7 @@ class App extends Component {
     ).then(result => {
       this.setState({
         articles: result.articles
-      })
+      });
     });
   }
 
@@ -41,15 +42,41 @@ class App extends Component {
       .then(json => json.data);
   }
 
+  onEdit(id) {
+    return () => {
+      this.setState({ contentEditableId: id });
+    };
+  }
+
+  onEnter = evt => {
+    if (evt.key === "Enter") {
+      console.log(evt.target.innerText);
+      evt.preventDefault();
+      this.setState({ contentEditableId: null });
+    }
+  };
+
   render() {
-    const {
-      articles,
-    } = this.state
+    const { articles, contentEditableId } = this.state;
 
     return (
       <div className="App">
-        <ol>
-          {articles.map(({title, id}) => <li key={id}>{title}</li>)}
+        <ol className="Articles">
+          {articles.map(({ title, id }) => (
+            <li key={id}>
+              <span
+                suppressContentEditableWarning={true}
+                contentEditable={contentEditableId === id}
+                onKeyPress={this.onEnter}
+              >
+                {title}
+              </span>
+              <span className="Operation">
+                <span onClick={this.onEdit(id)}>编辑</span>
+                <span>删除</span>
+              </span>
+            </li>
+          ))}
         </ol>
       </div>
     );
