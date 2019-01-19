@@ -1,17 +1,29 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
-const API_GRAPHQL = 'http://localhost:3000/graphql'
+const API_GRAPHQL = "http://localhost:3000/graphql";
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      articles: []
+    }
+  }
 
   componentDidMount() {
-    this.post(`
+    this.post(
+      `
       {
-        hello
+        articles { title, id }
       }
-    `)
+    `
+    ).then(result => {
+      this.setState({
+        articles: result.articles
+      })
+    });
   }
 
   post(query) {
@@ -24,26 +36,21 @@ class App extends Component {
       body: JSON.stringify({
         query
       })
-    }).then(r => r.json());
+    })
+      .then(r => r.json())
+      .then(json => json.data);
   }
 
   render() {
+    const {
+      articles,
+    } = this.state
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <ol>
+          {articles.map(({title, id}) => <li key={id}>{title}</li>)}
+        </ol>
       </div>
     );
   }
