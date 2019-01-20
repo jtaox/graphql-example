@@ -18,7 +18,15 @@ class App extends Component {
     this.post(
       `
       {
-        articles { title, id, create_time }
+        articles { 
+          title 
+          id
+          create_time
+          user {
+            user_name
+            id
+          }
+        }
       }
     `
     ).then(result => {
@@ -74,7 +82,7 @@ class App extends Component {
           <input placeholder="搜索" value={search} onChange={this.onSearchChange} />
         </div>
         <ol className="Articles">
-          {articles.map(({ title, id, create_time }) => (
+          {articles.map(({ title, id, create_time, user = {} }) => (
             <li key={id}>
               <span
                 suppressContentEditableWarning={true}
@@ -83,7 +91,7 @@ class App extends Component {
               >
                 {title}
               </span>
-              <span className="createTime">{create_time}</span>
+              <span className="user">By: {user.user_name}</span>
               <span className="Operation">
                 <span onClick={this.onEdit(id)}>编辑</span>
                 <span>删除</span>

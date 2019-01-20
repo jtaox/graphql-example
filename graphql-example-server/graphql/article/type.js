@@ -8,6 +8,8 @@ const {
   SearchableType
 } = require('./../interface/type')
 
+const { UserType } = require('./../user/type')
+
 const ArticleType = new GraphQLObjectType({
   name: "Article",
   interfaces: [SearchableType],
@@ -21,8 +23,8 @@ const ArticleType = new GraphQLObjectType({
     content: {
       type: GraphQLString
     },
-    user_id: {
-      type: GraphQLID
+    user: {
+      type: UserType
     },
     create_time: {
       type: GraphQLString

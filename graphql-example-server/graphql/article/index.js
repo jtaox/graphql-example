@@ -25,7 +25,16 @@ const articlebQueries = {
   articles: {
     type: new GraphQLList(ArticleType),
     resolve(root, params, options) {
-      return new Article().find({})
+      const articles = new Article().find({})
+
+      return articles.map(article => {
+        const user = (new User().find({id: article.user_id}) || [])[0]
+        
+        return {
+          ...article,
+          user,
+        }
+      })
     }
   },
   // search: {
