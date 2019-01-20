@@ -9,6 +9,7 @@ class App extends Component {
 
     this.state = {
       articles: [],
+      search: '',
       contentEditableId: null
     };
   }
@@ -17,7 +18,7 @@ class App extends Component {
     this.post(
       `
       {
-        articles { title, id }
+        articles { title, id, create_time }
       }
     `
     ).then(result => {
@@ -56,13 +57,24 @@ class App extends Component {
     }
   };
 
+  onSearchChange = (evt) => {
+    const value = evt.target.value
+
+    this.setState({
+      search: value
+    })
+  }
+
   render() {
-    const { articles, contentEditableId } = this.state;
+    const { articles, contentEditableId, search } = this.state;
 
     return (
       <div className="App">
+        <div className="Search">
+          <input placeholder="搜索" value={search} onChange={this.onSearchChange} />
+        </div>
         <ol className="Articles">
-          {articles.map(({ title, id }) => (
+          {articles.map(({ title, id, create_time }) => (
             <li key={id}>
               <span
                 suppressContentEditableWarning={true}
@@ -71,6 +83,7 @@ class App extends Component {
               >
                 {title}
               </span>
+              <span className="createTime">{create_time}</span>
               <span className="Operation">
                 <span onClick={this.onEdit(id)}>编辑</span>
                 <span>删除</span>
