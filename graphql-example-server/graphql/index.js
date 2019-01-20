@@ -1,8 +1,8 @@
 const { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLString } = require('graphql')
 
-// const {
-//   articlebQueries
-// } = require('./article')
+const {
+  articlebQueries
+} = require('./article')
 
 // const {
 //   unionQueries
@@ -20,7 +20,7 @@ const schema = new GraphQLSchema({
     fields: {
       // ...unionQueries,
       ...interfaceQueries,
-      // ...articlebQueries,
+      ...articlebQueries,
     }
   }),
   types: [ArticleType, UserType],
