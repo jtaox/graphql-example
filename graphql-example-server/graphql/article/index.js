@@ -18,6 +18,7 @@ const {
 } = require('./type')
 
 const Article = require('./../../model/article')
+const User = require('./../../model/user')
 
 
 const articlebQueries = {
@@ -26,7 +27,19 @@ const articlebQueries = {
     resolve(root, params, options) {
       return new Article().find({})
     }
-  }
+  },
+  // search: {
+  //   type: new GraphQLList(ArticleType),
+  //   args: {
+  //     keyword: { type: GraphQLString }
+  //   },
+  //   resolve(root, {keyword}) {
+  //     const articles = new Article().find({title: keyword})
+  //     const users = new User().find({user_name: keyword})
+  //     console.log(users)
+  //     return [...articles, ...users]
+  //   }
+  // }
 }
 
 module.exports = {

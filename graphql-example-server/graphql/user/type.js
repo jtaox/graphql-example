@@ -8,28 +8,22 @@ const {
   SearchableType
 } = require('./../interface/type')
 
-const ArticleType = new GraphQLObjectType({
-  name: "Article",
+const UserType = new GraphQLObjectType({
+  name: "User",
   interfaces: [SearchableType],
   fields: {
     id: {
       type: GraphQLID
     },
-    title: {
+    user_name: {
       type: GraphQLString
-    },
-    content: {
-      type: GraphQLString
-    },
-    user_id: {
-      type: GraphQLID
     },
     create_time: {
-      type: GraphQLString
-    },
+      type: GraphQLString,
+    }
   }
 })
 
 module.exports = {
-  ArticleType,
+  UserType,
 }

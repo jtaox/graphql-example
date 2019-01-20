@@ -1,16 +1,29 @@
-const { buildSchema, GraphQLSchema, GraphQLObjectType } = require('graphql')
+const { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLString } = require('graphql')
+
+// const {
+//   articlebQueries
+// } = require('./article')
+
+// const {
+//   unionQueries
+// } = require('./union')
 
 const {
-  articlebQueries
-} = require('./article')
+  interfaceQueries
+} = require('./interface')
+const { ArticleType } = require("./article/type")
 
+const { UserType } = require("./user/type")
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "Query",
     fields: {
-      ...articlebQueries
+      // ...unionQueries,
+      ...interfaceQueries,
+      // ...articlebQueries,
     }
   }),
+  types: [ArticleType, UserType],
 });
 
 // 使用 GraphQL Schema Language 创建一个 schema
