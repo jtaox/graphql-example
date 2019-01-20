@@ -6,7 +6,7 @@ const { UserType } = require("./../user/type")
 
 const SearchableType = new GraphQLUnionType({
   name: "Searchable",
-  types: [ArticleType],
+  types: [ArticleType, UserType],
   resolveType: (data) => {
     console.log(data)
     if (data.title) {
