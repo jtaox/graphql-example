@@ -80,6 +80,7 @@ class App extends Component {
       <div className="App">
         <div className="Search">
           <input placeholder="搜索" value={search} onChange={this.onSearchChange} />
+          <button>搜索</button>
         </div>
         <ol className="Articles">
           {articles.map(({ title, id, create_time, user = {} }) => (
