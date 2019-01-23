@@ -12,6 +12,13 @@ class User {
       })
     })
   }
+  filter(condition = {}) {
+    return data.filter(item => {
+      return Object.keys(condition).every(key => {
+        return item[key].indexOf(condition[key]) !== -1
+      })
+    })
+  }
 }
 
 module.exports = User

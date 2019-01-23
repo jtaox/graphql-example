@@ -28,8 +28,8 @@ const unionQueries = {
       text: { type : new GraphQLNonNull(GraphQLString) }
     },
     resolve: (root, {text}) => {
-      const articles = new Article().find({title: text})
-      const users = new User().find({user_name: text})
+      const articles = new Article().filter({title: text})
+      const users = new User().filter({user_name: text})
       return [...articles, ...users]
     }
   },

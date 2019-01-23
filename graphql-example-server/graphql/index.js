@@ -4,9 +4,9 @@ const {
   articlebQueries
 } = require('./article')
 
-// const {
-//   unionQueries
-// } = require('./union')
+const {
+  unionQueries
+} = require('./union')
 
 const {
   interfaceQueries
@@ -18,12 +18,12 @@ const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "Query",
     fields: {
-      // ...unionQueries,
-      ...interfaceQueries,
+      ...unionQueries,
+      // ...interfaceQueries,
       ...articlebQueries,
     }
   }),
-  types: [ArticleType, UserType],
+  // types: [ArticleType, UserType],
 });
 
 // 使用 GraphQL Schema Language 创建一个 schema

@@ -8,7 +8,7 @@ const SearchableType = new GraphQLUnionType({
   name: "Searchable",
   types: [ArticleType, UserType],
   resolveType: (data) => {
-    console.log(data)
+    
     if (data.title) {
       return ArticleType
     }

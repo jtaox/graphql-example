@@ -4,7 +4,7 @@ const {
 } = require('graphql')
 
 const SearchableType = new GraphQLInterfaceType({
-  name: "Searchable",
+  name: "SearchableInterface",
   fields: {
     create_time: { type: GraphQLString }
   },
