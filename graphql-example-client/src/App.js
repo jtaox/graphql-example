@@ -59,18 +59,44 @@ class App extends Component {
 
   onEnter = evt => {
     if (evt.key === "Enter") {
-      console.log(evt.target.innerText);
       evt.preventDefault();
       this.setState({ contentEditableId: null });
     }
   };
 
+  search = (keyword) => {
+    this.post(
+      `
+      {
+        search(text: ${keyword}) { 
+          ... on Article {
+            title
+          }
+          ... on User {
+            user_name
+          }
+        }
+      }
+    `
+    ).then(result => {
+      this.setState({
+        articles: result.articles
+      });
+    });
+  }
+
   onSearchChange = (evt) => {
     const value = evt.target.value
-
+  
     this.setState({
       search: value
     })
+  }
+
+  onKeyPress = (evt) => {
+    if (evt.key === 'Enter') {
+      this.search(this.state.search)
+    }
   }
 
   render() {
@@ -79,7 +105,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Search">
-          <input placeholder="搜索" value={search} onChange={this.onSearchChange} />
+          <input placeholder="搜索" value={search} onKeyPress={this.onKeyPress} onChange={this.onSearchChange} />
           <button>搜索</button>
         </div>
         <ol className="Articles">
