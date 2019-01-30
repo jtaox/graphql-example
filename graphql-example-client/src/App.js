@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 
-const API_GRAPHQL = "http://localhost:3000/graphql";
+import request from './utils/request'
 
 class App extends Component {
   constructor(props) {
@@ -37,18 +37,7 @@ class App extends Component {
   }
 
   post(query) {
-    return fetch(API_GRAPHQL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        query
-      })
-    })
-      .then(r => r.json())
-      .then(json => json.data);
+    return request({query})
   }
 
   onEdit(id) {
