@@ -37,9 +37,8 @@
   overflow: hidden;
 }
 
-.Search {
-  float: right;
-  overflow: hidden;
+.Search button {
+  margin-left: 6px;
 }
 
 .user {
