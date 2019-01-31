@@ -22,6 +22,18 @@ class Article {
       })
     })
   }
+  insert({title, content, user}) {
+    const lastData = data[data.length - 1]
+    const newData = {
+      id: lastData.id + 1,
+      content,
+      user_id: user,
+      title,
+      create_time: Date.now()
+    }
+    data.push(newData)
+    return newData
+  }
 }
 
 module.exports = Article

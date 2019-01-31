@@ -1,7 +1,8 @@
 const { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLString } = require('graphql')
 
 const {
-  articlebQueries
+  articlebQueries,
+  articleMutations
 } = require('./article')
 
 const {
@@ -24,6 +25,12 @@ const schema = new GraphQLSchema({
     }
   }),
   // types: [ArticleType, UserType],
+  mutation: new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+      ...articleMutations
+    }
+  })
 });
 
 // 使用 GraphQL Schema Language 创建一个 schema

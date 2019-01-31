@@ -14,7 +14,8 @@ const {
 } =  require('graphql');
 
 const {
-  ArticleType
+  ArticleType,
+  ArticleInputType
 } = require('./type')
 
 const Article = require('./../../model/article')
@@ -51,7 +52,21 @@ const articlebQueries = {
   // }
 }
 
+const articleMutations = {
+  createArticle: {
+    type: ArticleType,
+    args: {
+      article: {
+        type: ArticleInputType
+      }
+    },
+    resolve: (root, { article }) => {
+      return new Article().insert(article)
+    }
+  }
+}
+
 module.exports = {
-  articlebQueries
+  articlebQueries, articleMutations
 }
 

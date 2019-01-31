@@ -2,6 +2,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLID,
+  GraphQLInputObjectType
 } = require("graphql");
 
 const {
@@ -32,6 +33,21 @@ const ArticleType = new GraphQLObjectType({
   }
 })
 
+const ArticleInputType = new GraphQLInputObjectType({
+  name: "ArticleInput",
+  fields: {
+    title: {
+      type: GraphQLString
+    },
+    content: {
+      type: GraphQLString
+    },
+    user: {
+      type: GraphQLID
+    }  
+  }
+})
+
 module.exports = {
-  ArticleType,
+  ArticleType, ArticleInputType
 }
