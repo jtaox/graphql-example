@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import request from './utils/request'
+import request from "./utils/request";
 
 class App extends Component {
   constructor(props) {
@@ -9,14 +9,14 @@ class App extends Component {
 
     this.state = {
       articles: [],
-      search: '',
+      search: "",
       contentEditableId: null
     };
   }
 
   componentDidMount() {
-    this.post(
-      `
+    this.post({
+      query: `
       {
         articles { 
           title 
@@ -29,15 +29,15 @@ class App extends Component {
         }
       }
     `
-    ).then(result => {
+    }).then(result => {
       this.setState({
         articles: result.articles
       });
     });
   }
 
-  post(query) {
-    return request({query})
+  post(params) {
+    return request(params);
   }
 
   onEdit(id) {
@@ -53,11 +53,11 @@ class App extends Component {
     }
   };
 
-  search = (keyword) => {
-    this.post(
-      `
+  search = keyword => {
+    this.post({
+      query: `
       {
-        search(text: ${keyword}) { 
+        search(text: "${keyword}") { 
           ... on Article {
             title
           }
@@ -67,26 +67,27 @@ class App extends Component {
         }
       }
     `
-    ).then(result => {
+    }).then(result => {
+      const articles = result.search
       this.setState({
-        articles: result.articles
+        articles
       });
     });
-  }
+  };
 
-  onSearchChange = (evt) => {
-    const value = evt.target.value
-  
+  onSearchChange = evt => {
+    const value = evt.target.value;
+
     this.setState({
       search: value
-    })
-  }
+    });
+  };
 
-  onKeyPress = (evt) => {
-    if (evt.key === 'Enter') {
-      this.search(this.state.search)
+  onKeyPress = evt => {
+    if (evt.key === "Enter") {
+      this.search(this.state.search);
     }
-  }
+  };
 
   render() {
     const { articles, contentEditableId, search } = this.state;
@@ -94,7 +95,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Search">
-          <input placeholder="搜索" value={search} onKeyPress={this.onKeyPress} onChange={this.onSearchChange} />
+          <input
+            placeholder="搜索"
+            value={search}
+            onKeyPress={this.onKeyPress}
+            onChange={this.onSearchChange}
+          />
           <button>搜索</button>
         </div>
         <ol className="Articles">
