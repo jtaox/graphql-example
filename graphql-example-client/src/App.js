@@ -15,6 +15,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getList()
+  }
+
+  getList() {
     this.post({
       query: `
       {
@@ -75,6 +79,29 @@ class App extends Component {
     });
   };
 
+  createArticle = () => {
+    const inputVal = window.prompt('标题|内容|用户id')
+
+    if (!inputVal) return 
+
+    const [title = '', content = '', user = ''] = inputVal.split('|')
+    this.post({
+      query: `
+        mutation {
+          createArticle(article: {
+            title: "${title}"
+            content: "${content}"
+            user: ${user}
+          }) {
+            id
+          }
+        }
+      `
+    }).then(() => {
+      this.getList()
+    })
+  }
+
   onSearchChange = evt => {
     const value = evt.target.value;
 
@@ -101,7 +128,7 @@ class App extends Component {
             onKeyPress={this.onKeyPress}
             onChange={this.onSearchChange}
           />
-          <button>搜索</button>
+          <button onClick={this.createArticle}>添加文章</button>
         </div>
         <ol className="Articles">
           {articles.map(({ title, id, create_time, user = {} }) => (
@@ -113,7 +140,7 @@ class App extends Component {
               >
                 {title}
               </span>
-              <span className="user">By: {user.user_name}</span>
+              <span className="user">By: {user && user.user_name}</span>
               <span className="Operation">
                 <span onClick={this.onEdit(id)}>编辑</span>
                 <span>删除</span>
